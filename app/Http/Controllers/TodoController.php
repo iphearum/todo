@@ -40,10 +40,11 @@ class TodoController extends Controller
 
     public function update(Request $request)
     {
-        $data = Todo::where('id', $request->id);
-        $data->body = $request->body;
-        $data->title = $request->title;
-        $data->save();
+        Todo::where('id', $request->id)
+            ->update([
+                'title' => $request->title,
+                'body' => $request->body,
+            ]);
         return redirect()->back();
     }
 }
