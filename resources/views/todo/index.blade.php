@@ -1,6 +1,10 @@
-<div>
+@extends('layout')
+
+@section('content')
+<div class="center">
     <h1>Todo {{ $me }}</h1>
-    <p>{{ $hello }}</p>
+
+    <h3>{{ iprint('Hello laravel 1') }}</h3>
 
     <form method="POST" action="{{ route('todo.submit') }}">
         @csrf
@@ -8,7 +12,6 @@
         <input type="text" placeholder="input body" name="body" />
         <input type="submit" value="submit-button" />
     </form>
-
     <ul>
         @foreach ($todo as $key => $value)
             <li>{{ $key }} : {{ $value->title }} - {{ $value->body }} ID:{{ $value->id }}
@@ -26,3 +29,4 @@
         <input type="submit" value="update-button" />
     </form>
 </div>
+@endsection
