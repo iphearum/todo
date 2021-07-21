@@ -15,7 +15,11 @@
     <ul>
         @foreach ($todo as $key => $value)
             <li>{{ $key }} : {{ $value->title }} - {{ $value->body }} ID:{{ $value->id }}
-                <a href="{{ route('todo.delete', $value->id) }}">DELETE</a>
+                <form method="POST" action="{{ route('todo.delete', $value->id) }}">
+                    @csrf
+                    @method("DELETE")
+                    <button type="submit">DELETE</button>
+                </form>
             </li>
         @endforeach
     </ul>
@@ -28,5 +32,12 @@
         <input type="text" placeholder="input body" name="body" />
         <input type="submit" value="update-button" />
     </form>
+    <script>
+        // async function get(){
+        //     let data = await fetch('http://train.todo.org/get_todo/9').then(res=>res.json());
+        //     console.log(data);
+        // }
+        // get();
+    </script>
 </div>
 @endsection

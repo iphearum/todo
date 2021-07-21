@@ -3,21 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todo;
-use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
+use App\Services\TodoService;
+use App\Services\Todo2Service;
 
-class TodoController extends Controller
+class TodoController extends BaseController
 {
-    use ResponseTrait;
-
     public $me = "hello world";
+
+    public $service;
 
     public $data = [];
 
+    public function __construct(TodoService $todoService){
+        $this->service = $todoService;
+    }
+
     public function index()
     {
+        // return $this->jsonA();
+        // return $data.' TodoController';
         // return $this->jsonB();
-        return $this->jsonA();
+        // return $this->jsonA();
         // return iprint('hello laravel');
         $db_todo = Todo::all();
         // select * from todos
@@ -35,16 +42,28 @@ class TodoController extends Controller
 
     public function submit(Request $request)
     {
-        Todo::create([
+        $data = [
             'title' => $request->title,
             'body' => $request->body,
-        ]);
-        return redirect()->back();
+        ];
+        return $this->service->create($data);
+        // return redirect()->back();
+        // return json_decode(json_encode($request->title));
+        // Todo::create($data);
+        // return redirect()->back();
     }
 
     public function delete($id)
     {
-        $data = Todo::where('id', $id)->delete();
+        // $data = Todo::where('id', $id)->delete(); //opject
+        // $data = (object) Todo::where('id', $id)->delete(); //opject
+        $data = Todo::where('id', $id)->delete(); //array
+        // $data = json_encode($data); // string
+
+        // $number = 'a';
+        // $number = (integer) $number; // error
+        // $number = '1'|1;
+        // $number = (integer) $number; // true
         return redirect()->back();
     }
 
@@ -55,5 +74,9 @@ class TodoController extends Controller
                 'body' => $request->body,
             ]);
         return redirect()->back();
+    }
+
+    public function getTodo($id){
+        return Todo::where('id', $id)->get();
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,3 +28,16 @@ Route::get('/todo', [TodoController::class, 'index']);
 Route::post('/todo/submit', [TodoController::class, 'submit'])->name('todo.submit');
 Route::delete('/todo/delete/{id}', [TodoController::class, 'delete'])->name('todo.delete');
 Route::patch('/todo/update', [TodoController::class, 'update'])->name('todo.update');
+
+
+
+Route::get('/test', [TestController::class,'index']);
+
+Route::get('/user',function (){
+    return view('user.index');
+});
+Route::post('/user/submit',[UserController::class, 'createUser'])->name('user.submit');
+
+
+
+$router->get('/get_todo/{id}', [TodoController::class,'getTodo']);
