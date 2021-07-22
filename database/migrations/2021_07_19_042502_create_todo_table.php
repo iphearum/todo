@@ -14,7 +14,7 @@ class CreateTodoTable extends Migration
     public function up()
     {
         Schema::create('todos', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
             $table->string('title');
             $table->string('body');
             $table->timestamps();

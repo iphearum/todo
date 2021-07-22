@@ -67,16 +67,30 @@ class TodoController extends BaseController
         return redirect()->back();
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        Todo::where('id', $request->id)->update([
+        $request->validate([
+            'body'=>'required|string',
+            'title'=>'required'
+        ]);
+        Todo::where('id', $id)->update([
                 'title' => $request->title,
                 'body' => $request->body,
             ]);
-        return redirect()->back();
+        return redirect('/todo');
     }
 
     public function getTodo($id){
         return Todo::where('id', $id)->get();
+    }
+
+    public function view($id){
+        $data = Todo::where('id', $id)->first();
+        return view('todo.view',['data'=>$data]);
+    }
+
+    public function viewUpdate($id){
+        $data = Todo::where('id', $id)->first();
+        return view('todo.update',['data'=>$data]);
     }
 }

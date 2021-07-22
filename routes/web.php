@@ -20,14 +20,54 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/todo', function () {
-//     return "hello world";
+// Route::prefix('todo')->group(function(){
+//     Route::get('/', [TodoController::class, 'index'])->name('todo');
+//     Route::post('/submit', [TodoController::class, 'submit'])->name('todo.submit');
+//     Route::delete('/delete/{id}', [TodoController::class, 'delete'])->name('todo.delete');
+//     Route::patch('/update/{id}', [TodoController::class, 'update'])->name('todo.update');
+//     Route::get('/view/{id}', [TodoController::class, 'view'])->name('todo.view');
+
+//     // Route::middleware('auth')->group(function(){
+//     //     Route::get('/view/update/{id}', [TodoController::class, 'viewUpdate'])->name('todo.view.update');
+//     // });
+//     Route::group([
+//         'middleware'=>'auth',
+//     ], function(){
+//         Route::get('/view/update/{id}', [TodoController::class, 'viewUpdate'])->name('todo.view.update');
+//     });
 // });
 
-Route::get('/todo', [TodoController::class, 'index']);
-Route::post('/todo/submit', [TodoController::class, 'submit'])->name('todo.submit');
-Route::delete('/todo/delete/{id}', [TodoController::class, 'delete'])->name('todo.delete');
-Route::patch('/todo/update', [TodoController::class, 'update'])->name('todo.update');
+// Route::group([
+//     'prefix'=>'todo'
+// ], function (){
+//     Route::get('/', [TodoController::class, 'index'])->name('todo');
+//     Route::post('/submit', [TodoController::class, 'submit'])->name('todo.submit');
+//     Route::delete('/delete/{id}', [TodoController::class, 'delete'])->name('todo.delete');
+//     Route::patch('/update/{id}', [TodoController::class, 'update'])->name('todo.update');
+//     Route::get('/view/{id}', [TodoController::class, 'view'])->name('todo.view');
+
+//     Route::group([
+//         'middleware'=>'auth',
+//     ], function(){
+//         Route::get('/view/update/{id}', [TodoController::class, 'viewUpdate'])->name('todo.view.update');
+//     });
+// });
+
+
+$routers = [
+    'todo',
+    'user'
+];
+foreach($routers as $key){
+    Route::prefix($key)->group(function() use ($key, $router){
+        Route::middleware('auth')->group(function() use ($key, $router){
+            require __DIR__."/$key/auth.php";
+        });
+        require __DIR__."/$key/index.php";
+    });
+}
+
+
 
 
 
@@ -41,3 +81,7 @@ Route::post('/user/submit',[UserController::class, 'createUser'])->name('user.su
 
 
 $router->get('/get_todo/{id}', [TodoController::class,'getTodo']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
