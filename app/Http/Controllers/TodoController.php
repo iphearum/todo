@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todo;
-use Illuminate\Http\Request;
 use App\Services\TodoService;
-use App\Services\Todo2Service;
+use Illuminate\Http\Request;
 
 class TodoController extends BaseController
 {
@@ -15,12 +14,16 @@ class TodoController extends BaseController
 
     public $data = [];
 
-    public function __construct(TodoService $todoService){
+    public function __construct(TodoService $todoService)
+    {
         $this->service = $todoService;
     }
 
     public function index()
     {
+        // dd(Str::todo_mixin(), Str::todo_mixin_1());
+        // dd(Str::todo());
+
         // return $this->jsonA();
         // return $data.' TodoController';
         // return $this->jsonB();
@@ -36,7 +39,8 @@ class TodoController extends BaseController
         return view('todo.index', $data);
     }
 
-    public function jsonB(){
+    public function jsonB()
+    {
         return "JSONB";
     }
 
@@ -70,27 +74,30 @@ class TodoController extends BaseController
     public function update(Request $request, $id)
     {
         $request->validate([
-            'body'=>'required|string',
-            'title'=>'required'
+            'body' => 'required|string',
+            'title' => 'required',
         ]);
         Todo::where('id', $id)->update([
-                'title' => $request->title,
-                'body' => $request->body,
-            ]);
+            'title' => $request->title,
+            'body' => $request->body,
+        ]);
         return redirect('/todo');
     }
 
-    public function getTodo($id){
+    public function getTodo($id)
+    {
         return Todo::where('id', $id)->get();
     }
 
-    public function view($id){
+    public function view($id)
+    {
         $data = Todo::where('id', $id)->first();
-        return view('todo.view',['data'=>$data]);
+        return view('todo.view', ['data' => $data]);
     }
 
-    public function viewUpdate($id){
+    public function viewUpdate($id)
+    {
         $data = Todo::where('id', $id)->first();
-        return view('todo.update',['data'=>$data]);
+        return view('todo.update', ['data' => $data]);
     }
 }

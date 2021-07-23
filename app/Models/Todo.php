@@ -12,4 +12,14 @@ class Todo extends Model
     // protected $table = 'todos';
 
     protected $fillable = ['title', 'body'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function image()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }
