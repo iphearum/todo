@@ -10,6 +10,7 @@
                     @csrf
                     <input type="text" class="p-2 form-control" ​ placeholder="input title" name="title" />
                     <input type="text" class="p-2 form-control" ​ placeholder="input body" name="body" />
+                    <input type="text" class="p-2 form-control" name="image" placeholder="image" >
                     <hr>
                     <input type="submit" class="btn btn-primary" value="submit-button" />
                 </form>
@@ -24,6 +25,8 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>Body</th>
+                    <th>User name</th>
+                    <th>Image</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,6 +36,8 @@
                         <td>{{ $value->id }}</td>
                         <td>{{ $value->title }}</td>
                         <td>{{ $value->body }}</td>
+                        <td>{{ getUserName($value->user_id) }} - {{$value->user->name}}</td>
+                        <td>URL {{ $value->image ? $value->image->url : 'NULL' }}</td>
                         <td>
                             <a href="{{ route('todo.view', $value->id) }}" class="btn btn-sm btn-primary">VIEW</a>
                             @auth

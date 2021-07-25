@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\TestController;
-use App\Http\Controllers\TodoController;
-use App\Http\Controllers\UserController;
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,6 +76,7 @@ Route::get('/test', [TestController::class,'index']);
 Route::get('/user',function (){
     return view('user.index');
 });
+
 Route::post('/user/submit',[UserController::class, 'createUser'])->name('user.submit');
 
 
@@ -84,4 +85,7 @@ $router->get('/get_todo/{id}', [TodoController::class,'getTodo']);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+Route::get('/who', [WhoController::class, 'index']);

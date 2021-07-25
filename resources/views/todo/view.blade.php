@@ -11,6 +11,8 @@
             <div class="card-body">
                 <h3>{{ $data->title }}</h3>
                 <p>{{ $data->body }}</p>
+
+                <h3>Posted by {{ $data->user->name }}</h3>
             </div>
         </div>
     </div>

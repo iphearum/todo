@@ -40,10 +40,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function todos()
-    {
+    public function todos(){
         return $this->hasMany(Todo::class, 'user_id', 'id');
     }
 
-    // select * from uses join todos on users.id = todos.user_id
+    public function avatar(){
+        return $this->morphMany(Image::class, 'imageable');
+    }
+    // SELECT * FROM USERS INNER JOIN TODOS WHERE TODOS.user_id = USERS.id
 }
