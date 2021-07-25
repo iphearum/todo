@@ -1,6 +1,8 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Pipeline\Pipeline;
+
 class BaseService{
 
     public $model;
@@ -17,5 +19,12 @@ class BaseService{
         $id = $attributes['id'];
         unset($attributes['id']);
         return $this->model->where('id', $id)->update($attributes);
+    }
+
+    public function pipe(array $pipelines){
+        return app(Pipeline::class)
+            ->send($this->model->query())
+            ->through($pipelines)
+            ->thenReturn()->get();
     }
 }

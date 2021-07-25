@@ -5,21 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Todo extends Model
+class Todo extends BaseModel
 {
     use HasFactory;
 
     // protected $table = 'todos';
 
-    protected $fillable = ['title', 'body'];
+    protected $fillable = ['title', 'body', 'active', 'user_id'];
 
-    public function user()
-    {
+    protected $guarded = ['created_at', 'updated_at'];
+
+    public function user(){
         return $this->belongsTo(User::class);
-    }
-
-    public function image()
-    {
-        return $this->morphMany(Image::class, 'imageable');
+        // return $this->hasOne(User::class, 'id', 'user_id');
     }
 }
