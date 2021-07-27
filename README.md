@@ -16,8 +16,8 @@
     - Run the command ``composer install``
     - Edit connection with your database service
 5. Generate key for laravel project to be unique with connection
-    - Run the command ``php artisan key:generate`` or ``php artisan key:gen``
-7. Migration
     - Run the command ``php artisan key:generate`` or ``php artisan key:gen`` for generate key
+7. Migration
+    - Run the command ``php artisan migration``
 9. Host
     - Run the command ``php artisan serve``
